@@ -1,0 +1,12 @@
+{
+  "ClientsPerServer": 100,
+  "MessagesPerSecondPerClient": 1,
+  "PayloadBytes": 256,
+  "WarmupSeconds": 2,
+  "DurationSeconds": 0,
+  "KestrelPort": 5081,
+  "HttpListenerPort": 5082,
+  "Room": "lobby",
+  "Endpoints": "both",
+  "Results": "results/manual"
+}

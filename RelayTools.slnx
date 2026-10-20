@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="src/RelayTools.Core/RelayTools.Core.csproj" />
+  <Project Path="src/RelayTools.KestrelServer/RelayTools.KestrelServer.csproj" />
+  <Project Path="src/RelayTools.HttpListenerServer/RelayTools.HttpListenerServer.csproj" />
+  <Project Path="src/RelayTools.Client/RelayTools.Client.csproj" />
+</Solution>
