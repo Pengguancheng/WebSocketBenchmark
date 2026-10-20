@@ -13,6 +13,49 @@
 
 兩個 Server 各有實體入口：[Kestrel Program.cs](src/RelayTools.KestrelServer/Program.cs) 負責 WebApplication 啟動與 WebSocket 接受；[HttpListener Program.cs](src/RelayTools.HttpListenerServer/Program.cs) 負責 listener 啟動、接受與連線工作追蹤。兩者固定使用自己的 Server 模式，再交由同一 `RelayTools.Core.ChatRoom` 處理聊天室；沒有共用入口的模式切換分支。
 
+## Benchmark：既有 JSONL 觀察結果
+
+以下整理自 **2026-10-20 已執行的 NLog JSONL**，沒有為本表重新跑壓測，也不是 Rider / dotTrace 呼叫樹結果。[完整數值摘要與來源 JSONL SHA-256](benchmarks/2026-10-20/summary.json) 可供核對；原始日誌保留於本機，未上傳工作站路徑。
+
+### 執行條件
+
+| 項目 | 設定 |
+|---|---|
+| Runtime / OS | .NET 10.0.13 / Windows 10.0.26300.0 |
+| 邏輯處理器 | 32 |
+| 組態 | **Debug**，兩個 Server 均使用 Server GC |
+| 連線與發送量 | 每端 100 人，每人每秒 1 則，256 bytes／則 |
+| 聊天室 | 同房廣播，包含發送者；每端約 100 次輸入／秒、10,000 次輸出／秒 |
+| 執行方式 | 兩個 Server 與雙端 Client 同機並行，loopback `ws` |
+| 暖機／持續時間 | 設定暖機 2 秒、持續執行；以下擷取 `measure` 階段 |
+| 共同目標窗口 | UTC 14:28:00–14:28:30（UTC+8 22:28:00–22:28:30） |
+
+每個程序取目標窗口內第一至最後完整 metrics，各 30 筆。實際計數差值涵蓋約 29 秒；各程序採樣時間不同，邊界最多相差約 0.62 秒，未插值。
+
+### 量測結果
+
+| 指標 | Kestrel | HttpListener |
+|---|---:|---:|
+| 實際計數區間 | 28.999 秒 | 28.992 秒 |
+| CPU 時間差值 | 4,687.500 ms | 27,796.875 ms |
+| CPU 使用率：以單核心為 100% | 16.16% | 95.88% |
+| CPU 使用率：以全機 32 個邏輯處理器為 100% | 0.51% | 3.00% |
+| Working set 樣本平均 | 113.86 MiB | 107.44 MiB |
+| Private bytes 樣本平均 | 81.69 MiB | 80.63 MiB |
+| Managed heap 樣本平均 | 25.07 MiB | 無效：30 筆中有 3 筆負值 |
+| GC 次數差：Gen0 / Gen1 / Gen2 | 3 / 3 / 0 | 13 / 3 / 0 |
+| Server 收到／廣播次數 | 2,900 / 290,000 | 2,900 / 290,000 |
+| Client 發送／收到次數 | 2,900 / 290,000 | 2,900 / 290,000 |
+| 在線人數範圍 | 100–100 | 100–100 |
+| 窗口內錯誤事件／錯誤計數增量 | 0 / 0 | 0 / 0 |
+| Client 預定發送至收到：窗口平均 | 57.23 ms | 58.38 ms |
+
+CPU 使用率由程序累計 CPU 時間的首尾差值除以同程序經過時間計算，包含所有執行緒、runtime 與日誌成本。記憶體為每秒樣本的算術平均，`1 MiB = 1,048,576 bytes`；working set、private bytes、managed heap 是不同口徑，不能相加。延遲包含 Client 排程、廣播與接收，不是純 Server 處理時間或 RTT，也不是每秒平均值再平均。
+
+**本窗口觀察到 Kestrel CPU 較低，working set 與 private bytes 略高。** HttpListener 的 managed heap 有負值樣本，整項標為無效，沒有補零或排除後進行排名；GC 次數也不代表 GC 暫停時間。
+
+這是單次既有資料的觀察，來源為入口拆分前的 Debug 程序，未記錄當時實際載入 binary 的雜湊，不能當作目前 commit 的 Release benchmark。兩端暖機歷史、Rider profiler／debugger 是否 attach 未確認；同機 CPU 競爭與 Client 本身的成本也會影響結果。因此目前不能據此宣稱 Kestrel 在所有情境都較快。正式比較應以相同 Release 版本、不附 debugger、交替單端執行並重複量測。
+
 ## 設定
 
 請修改 **repo 根目錄的 `relaytools.json`**，不是 bin 內副本。三個專案及腳本均在啟動時讀取這份 JSON；不支援熱更新。可傳 `--config 絕對路徑`（腳本為 `-Config`）選其他設定。個別啟動時從工作目錄及執行檔目錄向上尋找這份檔案；console 與 NLog `started` 均列出實際絕對路徑及有效參數。
