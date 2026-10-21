@@ -1,0 +1,205 @@
+{
+  "sourceType": "NLog process telemetry, not Rider profiler",
+  "requestedStartUtc": "2026-10-21T09:12:20+08:00",
+  "requestedEndUtc": "2026-10-21T09:13:21+08:00",
+  "boundaryPolicy": "Per-process first and last complete metrics inside common UTC window; no interpolation; endpoints and CPU are cumulative differences.",
+  "memoryPolicy": "Arithmetic mean of valid memory samples; not time-weighted.",
+  "processes": [
+    {
+      "rawFile": "client-50560.jsonl",
+      "rawSha256": "1c0224f8b02f8835b17cb12157e6227f35cff830cf3e5e44e370604d969edbdb",
+      "pid": 50560,
+      "runId": "95ac9d9e8ed54a8c80c9f36115975456",
+      "mode": "client",
+      "firstUtc": "2026-10-21T09:12:20.6696971+08:00",
+      "lastUtc": "2026-10-21T09:13:20.6851322+08:00",
+      "durationSeconds": 60.0177867,
+      "samples": 61,
+      "phases": [
+        "measure"
+      ],
+      "cpuDeltaMs": 18796.875,
+      "cpuOneCorePercent": 31.318840686272758,
+      "cpuMachinePercent": 0.9787137714460237,
+      "cpuMachineDenominator": 32,
+      "memory": {
+        "workingSetBytes": {
+          "sampleMeanBytes": 89466376.39344262,
+          "minBytes": 86827008,
+          "maxBytes": 95866880,
+          "validSamples": 61
+        },
+        "privateBytes": {
+          "sampleMeanBytes": 55530277.7704918,
+          "minBytes": 52916224,
+          "maxBytes": 61120512,
+          "validSamples": 61
+        },
+        "managedHeapBytes": {
+          "sampleMeanBytes": 13416127.475409836,
+          "minBytes": 5905328,
+          "maxBytes": 20092352,
+          "validSamples": 61
+        }
+      },
+      "gcDelta": {
+        "0": 1055,
+        "1": 168,
+        "2": 58
+      },
+      "endpoints": {
+        "httplistener": {
+          "sent": 6000,
+          "received": 600000,
+          "errors": 0,
+          "closed": 0,
+          "scheduledLatencyMeanMs": 60.10399580233472,
+          "activeMin": 100,
+          "activeMax": 100
+        },
+        "kestrel": {
+          "sent": 6000,
+          "received": 600000,
+          "errors": 0,
+          "closed": 0,
+          "scheduledLatencyMeanMs": 53.379323286337204,
+          "activeMin": 100,
+          "activeMax": 100
+        }
+      },
+      "errorEvents": 0,
+      "skippedMalformedLines": 0
+    },
+    {
+      "rawFile": "httplistener-90160.jsonl",
+      "rawSha256": "cbc0be9834988c837360c0d7881d20cafbd5062cf38b8d2faef6e78eae89527f",
+      "pid": 90160,
+      "runId": "95ac9d9e8ed54a8c80c9f36115975456",
+      "mode": "httplistener",
+      "firstUtc": "2026-10-21T09:12:20.4552182+08:00",
+      "lastUtc": "2026-10-21T09:13:20.4533381+08:00",
+      "durationSeconds": 60.0004706,
+      "samples": 61,
+      "phases": [
+        "measure"
+      ],
+      "cpuDeltaMs": 42250.0,
+      "cpuOneCorePercent": 70.41611436960963,
+      "cpuMachinePercent": 2.200503574050301,
+      "cpuMachineDenominator": 32,
+      "memory": {
+        "workingSetBytes": {
+          "sampleMeanBytes": 113005954.09836066,
+          "minBytes": 103305216,
+          "maxBytes": 128049152,
+          "validSamples": 61
+        },
+        "privateBytes": {
+          "sampleMeanBytes": 91107260.85245901,
+          "minBytes": 81592320,
+          "maxBytes": 105283584,
+          "validSamples": 61
+        },
+        "managedHeapBytes": {
+          "sampleMeanBytes": 36480016.524590164,
+          "minBytes": 6347184,
+          "maxBytes": 61645968,
+          "validSamples": 61
+        }
+      },
+      "gcDelta": {
+        "0": 30,
+        "1": 3,
+        "2": 1
+      },
+      "endpoints": {
+        "httplistener": {
+          "sent": 600000,
+          "received": 6000,
+          "errors": 0,
+          "closed": 0,
+          "scheduledLatencyMeanMs": null,
+          "activeMin": 100,
+          "activeMax": 100
+        }
+      },
+      "errorEvents": 0,
+      "skippedMalformedLines": 0
+    },
+    {
+      "rawFile": "kestrel-51044.jsonl",
+      "rawSha256": "6a71ceda3d60c71e4b1e7c1c8059d459e5903732311b21efa58ebab772acafba",
+      "pid": 51044,
+      "runId": "95ac9d9e8ed54a8c80c9f36115975456",
+      "mode": "kestrel",
+      "firstUtc": "2026-10-21T09:12:20.4552237+08:00",
+      "lastUtc": "2026-10-21T09:13:20.4532563+08:00",
+      "durationSeconds": 60.0003836,
+      "samples": 61,
+      "phases": [
+        "measure"
+      ],
+      "cpuDeltaMs": 6687.5,
+      "cpuOneCorePercent": 11.145762074761135,
+      "cpuMachinePercent": 0.3483050648362855,
+      "cpuMachineDenominator": 32,
+      "memory": {
+        "workingSetBytes": {
+          "sampleMeanBytes": 105415730.36065574,
+          "minBytes": 88764416,
+          "maxBytes": 115417088,
+          "validSamples": 61
+        },
+        "privateBytes": {
+          "sampleMeanBytes": 78279126.03278689,
+          "minBytes": 61095936,
+          "maxBytes": 86949888,
+          "validSamples": 61
+        },
+        "managedHeapBytes": {
+          "sampleMeanBytes": 28839574.295081966,
+          "minBytes": 13327640,
+          "maxBytes": 45307240,
+          "validSamples": 61
+        }
+      },
+      "gcDelta": {
+        "0": 5,
+        "1": 0,
+        "2": 0
+      },
+      "endpoints": {
+        "kestrel": {
+          "sent": 600000,
+          "received": 6000,
+          "errors": 0,
+          "closed": 0,
+          "scheduledLatencyMeanMs": null,
+          "activeMin": 100,
+          "activeMax": 100
+        }
+      },
+      "errorEvents": 0,
+      "skippedMalformedLines": 0
+    }
+  ],
+  "environment": {
+    "runtime": "10.0.13",
+    "os": "Microsoft Windows NT 10.0.26300.0",
+    "logicalProcessors": 32,
+    "configuration": "Not recorded in JSONL; process command line was not readable",
+    "profilerState": "Not recorded in JSONL; not confirmed",
+    "sourceVersion": "Running binary hash was not captured"
+  },
+  "workload": {
+    "clientsPerServer": 100,
+    "messagesPerSecondPerClient": 1,
+    "payloadBytes": 256,
+    "transport": "ws over loopback",
+    "serversRunConcurrently": true,
+    "clientRunsOnSameMachine": true,
+    "warmupSeconds": 2,
+    "durationSeconds": 0,
+    "runId": "95ac9d9e8ed54a8c80c9f36115975456"
+  }
+}
